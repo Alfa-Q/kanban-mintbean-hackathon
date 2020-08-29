@@ -45,7 +45,6 @@ const DueDate = Styled.div`
 
 class Card extends Component {
   render() {
-    console.log(`${this.props.card.id} | ${this.props.index}`);
     return (
       <Draggable draggableId={this.props.card.id} index={this.props.index}>
         {(provided) => (
@@ -68,7 +67,11 @@ class Card extends Component {
                 {new Date(this.props.date).toDateString()}
               </DueDate>
               <CardPin>
-                {this.props.pinned ? "" : <img src="/icons8-pin-24.png" alt="pin" />}
+                {this.props.card.pinned ? (
+                  <img src="/icons8-pin-24.png" alt="pin" />
+                ) : (
+                  <img src="/icons8-pin-outline-24.png" alt="unpinned" />
+                )}
               </CardPin>
             </BottomSection>
           </Main>

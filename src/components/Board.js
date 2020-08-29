@@ -42,7 +42,7 @@ const CardContainer = Styled.div`
   background-color: #ecf284;
 `;
 
-// A custom dropdown menu for the board.
+// A custom dropdown menu for the board (three vertical dots).
 // Needs to be customized, otherwise dropdown menu is a button by default and
 // includes a downward arrow icon which looks strange.
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -55,7 +55,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     }}
   >
     {children}
-    <div class="threedots"></div>
+    <div className="threedots"></div>
   </div>
 ));
 
@@ -75,8 +75,6 @@ class Board extends Component {
               <Dropdown.Menu size="sm" title="">
                 <Dropdown.Header>Options</Dropdown.Header>
                 <Dropdown.Item>Edit Board</Dropdown.Item>
-                {/* This can perhaps be a solution in case we cannot get boards to be draggable */}
-                <Dropdown.Item>Move Board</Dropdown.Item>
                 <Dropdown.Divider></Dropdown.Divider>
                 <Dropdown.Item>Clear Board</Dropdown.Item>
                 <Dropdown.Item>Delete Board</Dropdown.Item>
