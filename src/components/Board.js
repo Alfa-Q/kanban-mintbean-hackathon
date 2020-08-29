@@ -11,7 +11,8 @@ const Main = Styled.div`
   min-width: 400px;
   background-color: #10aeb2;
   padding: 16px;
-  margin-left: 8px;
+  margin-right: 16px;
+  margin-bottom: 8px;
   box-shadow: 2px 2px 4px;
 `;
 
@@ -39,7 +40,7 @@ const CardContainer = Styled.div`
   padding-top: 8px;
   margin-bottom: 8px;
   min-height: 64px;
-  background-color: #ecf284;
+  background-color: ${(props) => (props.isDraggingOver ? "#ecf284" : "#17deee")};
 `;
 
 // A custom dropdown menu for the board (three vertical dots).
@@ -83,8 +84,13 @@ class Board extends Component {
           </DropdownList>
         </TopSection>
         <Droppable droppableId={this.props.board.id}>
-          {(provided) => (
-            <CardContainer className="rounded" ref={provided.innerRef} {...provided.droppableProps}>
+          {(provided, snapshot) => (
+            <CardContainer
+              className="rounded"
+              ref={provided.innerRef}
+              {...provided.droppableProps}
+              isDraggingOver={snapshot.isDraggingOver}
+            >
               {this.props.cards.map((card, index) => (
                 <Card key={card.id} card={card} index={index} />
               ))}

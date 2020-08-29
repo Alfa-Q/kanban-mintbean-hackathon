@@ -12,7 +12,8 @@ import initialData from "./initial-data";
 class App extends React.Component {
   // Test Dummy Data (See Initial Data.js file)
   state = initialData;
-  // state = React.setState(initialData);
+
+  // state = React.setState(["badfs", "badfadf"]);
 
   // TODO: Move drag drop to its own component
   onDragEnd = (result) => {
@@ -85,24 +86,27 @@ class App extends React.Component {
   render() {
     return (
       <div>
+        {/* These two components stickied to top */}
         <Header></Header>
+        <Toolbar appState={this.state}></Toolbar>
+        {/* The rest is unstickied */}
         <main>
-          <Toolbar></Toolbar>
-
-          <DragDropContext onDragEnd={this.onDragEnd}>
-            {
-              //  Generate all of the boards
-              this.state.boardOrder.map((boardId) => {
-                const board = this.state.boards[boardId];
-                const cards = board.cards.map((cardId) => {
-                  const card = this.state.cards[cardId];
-                  const tags = card.tags.map((tagId) => this.state.tags[tagId]);
-                  return { ...card, tags: tags };
-                });
-                return <Board key={board.id} board={board} cards={cards} />;
-              })
-            }
-          </DragDropContext>
+          <div id="board-container">
+            <DragDropContext onDragEnd={this.onDragEnd}>
+              {
+                //  Generate all of the boards
+                this.state.boardOrder.map((boardId) => {
+                  const board = this.state.boards[boardId];
+                  const cards = board.cards.map((cardId) => {
+                    const card = this.state.cards[cardId];
+                    const tags = card.tags.map((tagId) => this.state.tags[tagId]);
+                    return { ...card, tags: tags };
+                  });
+                  return <Board key={board.id} board={board} cards={cards} />;
+                })
+              }
+            </DragDropContext>
+          </div>
         </main>
         <Footer></Footer>
       </div>

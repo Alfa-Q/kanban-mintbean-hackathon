@@ -11,7 +11,7 @@ const Main = Styled.div`
   padding-bottom: 8px;
   cursor: pointer;
   box-shadow: 1px 1px 2px;
-  background-color: white;
+  background-color: ${(props) => (props.isDragging ? "lightgrey" : "white")};
 `;
 
 const TopSection = Styled.div`
@@ -47,8 +47,13 @@ class Card extends Component {
   render() {
     return (
       <Draggable draggableId={this.props.card.id} index={this.props.index}>
-        {(provided) => (
-          <Main {...provided.draggableProps} {...provided.dragHandleProps} ref={provided.innerRef}>
+        {(provided, snapshot) => (
+          <Main
+            {...provided.draggableProps}
+            {...provided.dragHandleProps}
+            ref={provided.innerRef}
+            isDragging={snapshot.isDragging}
+          >
             <TopSection>
               <TagContainer>
                 {this.props.card.tags.map((tag) => (
