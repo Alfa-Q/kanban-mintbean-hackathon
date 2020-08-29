@@ -18,6 +18,10 @@ const TopSection = Styled.div`
   display: block;
 `;
 
+const BottomSection = Styled.div`
+  display: block;
+`;
+
 const TagContainer = Styled.div`
   display: inline-block;
   margin-right: 4px;
@@ -28,9 +32,15 @@ const TagContainer = Styled.div`
 `;
 
 const CardPin = Styled.div`
-  display: inline block;
-  margin-left: auto;
+  display: inline-block;
+  float: right;
   cursor: pointer;
+`;
+
+const DueDate = Styled.div`
+  display: inline-block;
+  color; red;
+  opacity: 50%;
 `;
 
 class Card extends Component {
@@ -50,7 +60,17 @@ class Card extends Component {
               </TagContainer>
             </TopSection>
             {this.props.card.smdesc}
-            <CardPin>{this.props.pinned ? "" : <img src="/icons8-pin-24.png" alt="pin" />}</CardPin>
+            <BottomSection>
+              <DueDate>
+                <span role="img" aria-label="due">
+                  🕒
+                </span>{" "}
+                {new Date(this.props.date).toDateString()}
+              </DueDate>
+              <CardPin>
+                {this.props.pinned ? "" : <img src="/icons8-pin-24.png" alt="pin" />}
+              </CardPin>
+            </BottomSection>
           </Main>
         )}
       </Draggable>

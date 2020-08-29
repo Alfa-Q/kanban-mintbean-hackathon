@@ -10,26 +10,31 @@ const initialData = {
       id: "card-1-1",
       tags: ["🐛 Bug Tracking", "🚀 Rocket Launch"],
       smdesc: "Hello World!",
+      due: "12 Dec 2010 12:00:00 GMT",
     },
     "card-1-2": {
       id: "card-1-2",
       tags: ["🐛 Bug Tracking"],
       smdesc: "Hello World!",
+      due: "14 Dec 2011 12:00:00 GMT",
     },
     "card-1-3": {
       id: "card-1-3",
       tags: ["👾 Video Game"],
       smdesc: "Beat the final boss",
+      due: "01 Feb 2015 12:00:00 GMT",
     },
     "card-2-1": {
       id: "card-2-1",
       tags: ["🚀 Rocket Launch"],
       smdesc: "Card 2-1",
+      due: "01 Jan 2010 12:00:00 GMT",
     },
     "card-3-1": {
       id: "card-3-1",
       tags: ["👾 Video Game"],
       smdesc: "Card 3-1",
+      due: "01 Jan 1970 00:00:00 GMT",
     },
   },
   boards: {

@@ -4,7 +4,7 @@ import AppContext from "../AppContext";
 
 function AddBoardModal(props) {
   const [boardName, setBoardName] = React.useState("");
-  const { boards, addBoard } = React.useContext(AppContext);
+  // const { boards, addBoard } = React.useContext(AppContext);
 
   const handleChange = (e) => {
     setBoardName(e.target.value);

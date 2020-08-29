@@ -36,35 +36,10 @@ main {
   height: 48px;
   color: white;
   background: grey;
+  margin-bottom: 8px;
 }
 
 /* ======================= BOARD AND CARD ========================= */
-
-#board-container {
-  display: flex;
-  justify-content: space-between;
-
-  overflow-x: auto;
-  overflow-y: auto;
-
-  height: calc(100vh - 190px);
-  width: 100%;
-
-  margin: 0px 0px;
-  padding: 16px 16px;
-}
-
-.board-top {
-  display: flex;
-  margin-bottom: 16px;
-}
-
-.board-name {
-  margin-top: 4px;
-  display: inline-block;
-  margin-right: auto;
-  vertical-align: middle;
-}
 
 .threedots:after {
   content: "\2807";
@@ -72,16 +47,6 @@ main {
   display: inline-block;
   margin-left: auto;
   margin-right: -8px;
-}
-
-.card-container {
-  justify-content: space-between;
-  height: 100%;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 8px;
-  margin-bottom: 8px;
-  min-height: 64px;
 }
 
 .card {
@@ -92,21 +57,6 @@ main {
   padding-bottom: 8px;
   cursor: pointer;
   box-shadow: 1px 1px 2px;
-}
-
-.tag-container {
-  display: block;
-}
-
-.tag-container > span {
-  display: inline-block;
-  margin-right: 4px;
-}
-
-.card-pin {
-  display: inline block;
-  margin-left: auto;
-  cursor: pointer;
 }
 
 .unselectable {
