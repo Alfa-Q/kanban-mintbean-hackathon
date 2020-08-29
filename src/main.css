@@ -54,24 +54,6 @@ main {
   padding: 16px 16px;
 }
 
-.board {
-  display: flex;
-  flex-direction: column;
-
-  max-width: 400px;
-  min-width: 400px;
-
-  background-color: #10aeb2;
-
-  padding: 16px;
-
-  box-shadow: 2px 2px 4px;
-}
-
-.board-dropdown {
-  display: inline-block;
-}
-
 .board-top {
   display: flex;
   margin-bottom: 16px;
@@ -110,7 +92,6 @@ main {
   padding-bottom: 8px;
   cursor: pointer;
   box-shadow: 1px 1px 2px;
-  cursor: grabbing;
 }
 
 .tag-container {

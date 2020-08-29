@@ -13,7 +13,7 @@ function AddBoardModal(props) {
   const handleCreate = (e) => {
     // Create a new board and add
     console.log("Creating New Board...");
-    addBoard(boardName);
+    //addBoard(boardName);
     props.onHide();
   };
 
