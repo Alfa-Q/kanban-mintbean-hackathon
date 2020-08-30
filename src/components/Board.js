@@ -3,6 +3,8 @@ import { Button, Dropdown } from "react-bootstrap";
 import Styled from "styled-components";
 import Card from "./Card";
 import { Droppable } from "react-beautiful-dnd";
+import AddCardModal from "./AddCardModal";
+import EditBoardModal from "./EditBoardModal";
 
 const Main = Styled.div`
   display: inline-flex;
@@ -40,7 +42,17 @@ const CardContainer = Styled.div`
   padding-top: 8px;
   margin-bottom: 8px;
   min-height: 64px;
+  transition: background-color 0.4s ease;
   background-color: ${(props) => (props.isDraggingOver ? "#ecf284" : "#17deee")};
+`;
+
+const BottomSection = Styled.div`
+  display: block;
+`;
+
+const AddButton = Styled.div`
+  background-color: "#043334";
+  color: white;
 `;
 
 // A custom dropdown menu for the board (three vertical dots).
@@ -51,6 +63,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     href=""
     ref={ref}
     onClick={(e) => {
+      console.log(e);
       e.preventDefault();
       onClick(e);
     }}
@@ -65,6 +78,14 @@ const getListStyle = (isDraggingOver) => ({
 });
 
 class Board extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editBoardModalShow: false,
+      addCardModalShow: false,
+    };
+  }
+
   render() {
     return (
       <Main className="rounded">
@@ -75,10 +96,14 @@ class Board extends Component {
               <Dropdown.Toggle as={CustomToggle}></Dropdown.Toggle>
               <Dropdown.Menu size="sm" title="">
                 <Dropdown.Header>Options</Dropdown.Header>
-                <Dropdown.Item>Edit Board</Dropdown.Item>
+                <Dropdown.Item onClick={() => this.setState({ editBoardModalShow: true })}>
+                  Edit Board
+                </Dropdown.Item>
                 <Dropdown.Divider></Dropdown.Divider>
-                <Dropdown.Item>Clear Board</Dropdown.Item>
-                <Dropdown.Item>Delete Board</Dropdown.Item>
+                <Dropdown.Item onClick={() => this.props.handleClearBoard(this.props.board.id)}>
+                  Clear Board
+                </Dropdown.Item>
+                <Dropdown.Item /*onClick={}*/>Delete Board</Dropdown.Item>
               </Dropdown.Menu>
             </Dropdown>
           </DropdownList>
@@ -98,6 +123,24 @@ class Board extends Component {
             </CardContainer>
           )}
         </Droppable>
+        <BottomSection>
+          <AddButton>
+            <Button onClick={() => this.setState({ addCardModalShow: true })}>+</Button>
+          </AddButton>
+        </BottomSection>
+        <EditBoardModal
+          show={this.state.editBoardModalShow}
+          boardId={this.props.board.id}
+          boardName={this.props.board.name}
+          handleEditBoard={this.props.handleEditBoard}
+          onHide={() => this.setState({ editBoardModalShow: false })}
+        />
+        <AddCardModal
+          show={this.state.addCardModalShow}
+          boardId={this.props.board.id}
+          handleAddCard={this.props.handleAddCard}
+          onHide={() => this.setState({ addCardModalShow: false })}
+        />
       </Main>
     );
   }

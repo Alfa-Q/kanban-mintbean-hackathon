@@ -9,7 +9,6 @@ const Main = Styled.div`
   padding-right: 8px;
   padding-top: 8px;
   padding-bottom: 8px;
-  cursor: pointer;
   box-shadow: 1px 1px 2px;
   background-color: ${(props) => (props.isDragging ? "lightgrey" : "white")};
 `;
@@ -23,7 +22,7 @@ const BottomSection = Styled.div`
 `;
 
 const TagContainer = Styled.div`
-  display: inline-block;
+  display: block;
   margin-right: 4px;
   color: white;
   > span {
@@ -46,7 +45,11 @@ const DueDate = Styled.div`
 class Card extends Component {
   render() {
     return (
-      <Draggable draggableId={this.props.card.id} index={this.props.index}>
+      <Draggable
+        draggableId={this.props.card.id}
+        index={this.props.index}
+        isDragDisabled={this.props.card.pinned}
+      >
         {(provided, snapshot) => (
           <Main
             {...provided.draggableProps}
@@ -62,8 +65,8 @@ class Card extends Component {
                   </Badge>
                 ))}
               </TagContainer>
+              {this.props.card.name}
             </TopSection>
-            {this.props.card.smdesc}
             <BottomSection>
               <DueDate>
                 <span role="img" aria-label="due">

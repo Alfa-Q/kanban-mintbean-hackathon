@@ -3,6 +3,7 @@ import { Navbar, Button } from "react-bootstrap";
 import Styled from "styled-components";
 
 const Wrapper = Styled.div`
+  background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
 `;
 
 class Header extends Component {

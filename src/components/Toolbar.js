@@ -14,7 +14,6 @@ class Toolbar extends Component {
     super(props);
     this.state = {
       modalShow: false,
-      appState: props.appState,
     };
   }
 
@@ -40,7 +39,7 @@ class Toolbar extends Component {
           </div>
           <AddBoardModal
             show={this.state.modalShow}
-            appState={this.state.appState}
+            handleAddBoard={this.props.handleAddBoard}
             onHide={() => this.setState({ modalShow: false })}
           />
         </Navbar>
