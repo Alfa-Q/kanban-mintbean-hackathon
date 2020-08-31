@@ -5,7 +5,7 @@ import Styled from "styled-components";
 const Wrapper = Styled.div`
   color: white;
   margin: 0px;
-
+  float: bottom;
   margin: 0 auto -155px;
 `;
 
@@ -15,7 +15,7 @@ function Footer(props) {
       <Navbar bg="secondary" variant="light">
         Created by Josh Matsushima, Ryan Mileris, Scott Krysten
         <div className="ml-auto">
-          <img src="../../icons8-github-60.png" alt="Github logo" />
+          <img src={process.env.PUBLIC_URL + "/icons8-github-60.png"} alt="Github logo" />
         </div>
       </Navbar>
     </Wrapper>

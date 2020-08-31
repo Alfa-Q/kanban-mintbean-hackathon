@@ -22,7 +22,6 @@ class EditBoardModal extends React.Component {
 
   render() {
     const { handleEditBoard, boardName, boardId, ...rest } = this.props;
-    console.log(rest);
     return (
       <Modal {...rest} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header closeButton>

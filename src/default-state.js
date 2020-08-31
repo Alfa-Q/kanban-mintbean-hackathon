@@ -1,5 +1,5 @@
 // Initial Board State (Required by Hackathon Rules)
-const initialData = {
+const defaultState = {
   tags: {},
   cards: {},
   boards: {
@@ -22,4 +22,4 @@ const initialData = {
   boardOrder: ["to-do", "in-progress", "done"],
 };
 
-export default initialData;
+export default defaultState;

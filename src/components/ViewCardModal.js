@@ -201,8 +201,10 @@ class ViewCardModal extends Component {
           </Form>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success">Delete</Button>
-          <Button variant="success" onClick={this.handleOnClose}>
+          <Button variant="danger" onClick={this.handleDeleteCard}>
+            Delete
+          </Button>
+          <Button variant="secondary" onClick={this.handleOnClose}>
             Close
           </Button>
         </Modal.Footer>

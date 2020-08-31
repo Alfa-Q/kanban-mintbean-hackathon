@@ -1,17 +1,19 @@
 import React from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Board from "./components/Board";
 import ModalContainer from "./components/ModalContainer";
+import Home from "./components/Home";
 
 // TEMPORARY
 import defaultState from "./default-state";
 
 class App extends React.Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     try {
       let storedState = localStorage.getItem("kanban-state");
       storedState = storedState === null ? null : JSON.parse(storedState);
@@ -20,13 +22,47 @@ class App extends React.Component {
       console.log("Got Bad Data!  Resorting to Default State");
       this.state = defaultState;
     }
+    this.handleResetKanban.bind(this);
+    this.handleAddCard.bind(this);
+    this.handleUpdateCard.bind(this);
+    this.handleUpdateCard.bind(this);
+    this.handleDeleteCard.bind(this);
+    this.handleAddBoard.bind(this);
+    this.handleClearBoard.bind(this);
+    this.handleEditBoard.bind(this);
+    this.handleDeleteBoard.bind(this);
   }
 
+  handleUpdatePins = (cardId, boardId, isPinned) => {};
+
+  handleImportFile = (fileData) => {
+    try {
+      this.setState(JSON.parse(fileData), () => {
+        localStorage.setItem("kanban-state", fileData);
+      });
+    } catch (error) {
+      // Display error prompt
+    }
+  };
+
+  handleExportFile = () => {
+    var a = document.createElement("a");
+    var file = new Blob([JSON.stringify(this.state)], { type: "text/plain" });
+    a.href = URL.createObjectURL(file);
+    a.download = "a.json";
+    a.click();
+  };
+
   handleResetKanban = () => {
+    console.log("Resetting the Kanban!");
     // Update local storage
     localStorage.setItem("kanban-state", JSON.stringify(defaultState));
+    console.log(defaultState);
     // Modify current state
-    this.setState(defaultState);
+    console.log(this);
+    this.setState(JSON.parse(JSON.stringify(defaultState)), () =>
+      console.log(`This is the default state:`, defaultState)
+    );
   };
 
   // ==============================================
@@ -85,18 +121,6 @@ class App extends React.Component {
       console.log("Saved New Card!");
       localStorage.setItem("kanban-state", JSON.stringify(this.state));
     });
-
-    /*
-    const updatedState = {
-      cards: {
-        ...this.state.cards,
-        [card.id]: card,
-      },
-    };
-    console.log(card);
-    this.setState(updatedState);
-    console.log(this.state);
-    */
   };
 
   handleDeleteCard = (card, boardId) => {
@@ -175,24 +199,25 @@ class App extends React.Component {
     const boardCards = board.cards.slice();
     let allCards = this.state.cards;
 
+    //delete board from boardOrder;
+    const boardOrder = this.state.boardOrder;
+    let boardOrderIndex = boardOrder.findIndex((boardID) => boardID === boardId);
+    boardOrder.splice(boardOrderIndex, 1);
+
+    //delete cards
     boardCards.forEach((cardId) => {
       delete allCards[cardId];
       board.cards.pop();
     });
 
-    const boards = this.state.boards;
+    //delete board from boards;
+    const boards = { ...this.state.boards };
     delete boards[boardId];
-
-    const boardOrder = this.state.boardOrder;
-    let boardOrderIndex = boardOrder.findIndex((boardID) => boardID === boardId);
-    boardOrder.splice(boardOrderIndex, 1);
 
     const updatedState = {
       ...this.state,
       cards: allCards,
-      boards: {
-        boards,
-      },
+      boards: boards,
       boardOrder: boardOrder,
     };
 
@@ -319,62 +344,73 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
-        {/* These two components stickied to top */}
-        <Header
-          handleAddBoard={this.handleAddBoard}
-          handleResetKanban={this.handleResetKanban}
-        ></Header>
-        {/* The rest is unstickied */}
-        <main>
-          <div
-            id="board-container"
-            style={{
-              background: "black",
-              overflowX: "auto !important",
-              paddingLeft: "32px",
-            }}
-          >
-            <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
-              <Droppable droppableId="board-container" type="board" direction="horizontal">
-                {(provided) => (
-                  <div {...provided.droppableProps} ref={provided.innerRef}>
-                    {
-                      //  Generate all of the boards
-                      this.state.boardOrder.map((boardId, index) => {
-                        console.log("\n", this.state);
-                        const board = this.state.boards[boardId];
-                        const cards = board.cards.map((cardId) => {
-                          const card = this.state.cards[cardId];
-                          const tags = card.tags.map((tagId) => this.state.tags[tagId]);
-                          return { ...card, tags: tags };
-                        });
-                        return (
-                          <Board
-                            key={board.id}
-                            board={board}
-                            cards={cards}
-                            handleAddCard={this.handleAddCard}
-                            handleEditBoard={this.handleEditBoard}
-                            handleClearBoard={this.handleClearBoard}
-                            handleDeleteBoard={this.handleDeleteBoard}
-                            handleUpdateCard={this.handleUpdateCard}
-                            handleDeleteCard={this.handleDeleteCard}
-                            index={index}
-                          />
-                        );
-                      })
-                    }
-                    {provided.placeholder}
-                  </div>
-                )}
-              </Droppable>
-            </DragDropContext>
-          </div>
-        </main>
-        <ModalContainer handleClearBoard={this.handleClearBoard}></ModalContainer>
-        <Footer></Footer>
-      </div>
+      <Router>
+        <Switch>
+          <Route path="/app">
+            <div>
+              {/* These two components stickied to top */}
+              <Header
+                handleAddBoard={this.handleAddBoard}
+                handleResetKanban={this.handleResetKanban}
+                handleImportFile={this.handleImportFile}
+                handleExportFile={this.handleExportFile}
+              ></Header>
+              {/* The rest is unstickied */}
+              <main>
+                <div
+                  id="board-container"
+                  style={{
+                    background: "black",
+                    overflowX: "auto !important",
+                    paddingLeft: "32px",
+                  }}
+                >
+                  <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
+                    <Droppable droppableId="board-container" type="board" direction="horizontal">
+                      {(provided) => (
+                        <div {...provided.droppableProps} ref={provided.innerRef}>
+                          {
+                            //  Generate all of the boards
+                            this.state.boardOrder.map((boardId, index) => {
+                              const board = this.state.boards[boardId];
+                              const cards = board.cards.map((cardId) => {
+                                const card = this.state.cards[cardId];
+                                const tags = card.tags.map((tagId) => this.state.tags[tagId]);
+                                return { ...card, tags: tags };
+                              });
+                              return (
+                                <Board
+                                  key={board.id}
+                                  board={board}
+                                  cards={cards}
+                                  handleAddCard={this.handleAddCard}
+                                  handleEditBoard={this.handleEditBoard}
+                                  handleClearBoard={this.handleClearBoard}
+                                  handleDeleteBoard={this.handleDeleteBoard}
+                                  handleUpdateCard={this.handleUpdateCard}
+                                  handleDeleteCard={this.handleDeleteCard}
+                                  handleUpdatePins={this.handleUpdatePins}
+                                  index={index}
+                                />
+                              );
+                            })
+                          }
+                          {provided.placeholder}
+                        </div>
+                      )}
+                    </Droppable>
+                  </DragDropContext>
+                </div>
+              </main>
+              <ModalContainer handleClearBoard={this.handleClearBoard}></ModalContainer>
+              <Footer></Footer>
+            </div>
+          </Route>
+          <Route path="/">
+            <Home />
+          </Route>
+        </Switch>
+      </Router>
     );
   }
 }

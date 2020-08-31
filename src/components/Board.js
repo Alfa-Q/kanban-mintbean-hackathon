@@ -90,6 +90,7 @@ class CardList extends Component {
         index={index}
         handleUpdateCard={this.props.handleUpdateCard}
         handleDeleteCard={this.props.handleDeleteCard}
+        handleUpdatePins={this.props.handleUpdatePins}
         boardId={this.props.boardId}
       />
     ));
@@ -155,6 +156,7 @@ class Board extends Component {
                     cards={this.props.cards}
                     handleUpdateCard={this.props.handleUpdateCard}
                     handleDeleteCard={this.props.handleDeleteCard}
+                    handleUpdatePins={this.props.handleUpdatePins}
                     boardId={this.props.board.id}
                   ></CardList>
                   {provided.placeholder}

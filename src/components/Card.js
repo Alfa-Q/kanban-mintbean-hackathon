@@ -65,6 +65,11 @@ class Card extends Component {
     this.setState({ viewCardModal: false });
   };
 
+  handlePinClicked = () => {
+    this.props.card.pinned = !this.props.card.pinned;
+    this.props.handleUpdatePins(this.props.boardId, this.props.card.id, this.props.card.pinned);
+  };
+
   render() {
     return (
       <Draggable
@@ -100,9 +105,13 @@ class Card extends Component {
               </DueDate>
               <CardPin>
                 {this.props.card.pinned ? (
-                  <img src="/icons8-pin-24.png" alt="pin" />
+                  <img src="/icons8-pin-24.png" alt="pin" onClick={() => this.handlePinClicked} />
                 ) : (
-                  <img src="/icons8-pin-outline-24.png" alt="unpinned" />
+                  <img
+                    src="/icons8-pin-outline-24.png"
+                    alt="unpinned"
+                    onClick={this.handlePinClicked}
+                  />
                 )}
               </CardPin>
             </BottomSection>
