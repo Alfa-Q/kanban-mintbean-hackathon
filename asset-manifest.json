@@ -1,19 +1,19 @@
 {
   "files": {
     "main.css": "/kanban-mintbean-hackathon/static/css/main.e6c532cf.chunk.css",
-    "main.js": "/kanban-mintbean-hackathon/static/js/main.b80005af.chunk.js",
-    "main.js.map": "/kanban-mintbean-hackathon/static/js/main.b80005af.chunk.js.map",
+    "main.js": "/kanban-mintbean-hackathon/static/js/main.ce648475.chunk.js",
+    "main.js.map": "/kanban-mintbean-hackathon/static/js/main.ce648475.chunk.js.map",
     "runtime-main.js": "/kanban-mintbean-hackathon/static/js/runtime-main.ab7e996a.js",
     "runtime-main.js.map": "/kanban-mintbean-hackathon/static/js/runtime-main.ab7e996a.js.map",
     "static/css/2.b1b91439.chunk.css": "/kanban-mintbean-hackathon/static/css/2.b1b91439.chunk.css",
-    "static/js/2.48c77132.chunk.js": "/kanban-mintbean-hackathon/static/js/2.48c77132.chunk.js",
-    "static/js/2.48c77132.chunk.js.map": "/kanban-mintbean-hackathon/static/js/2.48c77132.chunk.js.map",
+    "static/js/2.da3dfa1f.chunk.js": "/kanban-mintbean-hackathon/static/js/2.da3dfa1f.chunk.js",
+    "static/js/2.da3dfa1f.chunk.js.map": "/kanban-mintbean-hackathon/static/js/2.da3dfa1f.chunk.js.map",
     "index.html": "/kanban-mintbean-hackathon/index.html",
-    "precache-manifest.52aee31ef727f4a6dc792aba72010ade.js": "/kanban-mintbean-hackathon/precache-manifest.52aee31ef727f4a6dc792aba72010ade.js",
+    "precache-manifest.bbc888900617d0530fc72df97349b718.js": "/kanban-mintbean-hackathon/precache-manifest.bbc888900617d0530fc72df97349b718.js",
     "service-worker.js": "/kanban-mintbean-hackathon/service-worker.js",
     "static/css/2.b1b91439.chunk.css.map": "/kanban-mintbean-hackathon/static/css/2.b1b91439.chunk.css.map",
     "static/css/main.e6c532cf.chunk.css.map": "/kanban-mintbean-hackathon/static/css/main.e6c532cf.chunk.css.map",
-    "static/js/2.48c77132.chunk.js.LICENSE.txt": "/kanban-mintbean-hackathon/static/js/2.48c77132.chunk.js.LICENSE.txt",
+    "static/js/2.da3dfa1f.chunk.js.LICENSE.txt": "/kanban-mintbean-hackathon/static/js/2.da3dfa1f.chunk.js.LICENSE.txt",
     "static/media/Lato-Black.woff": "/kanban-mintbean-hackathon/static/media/Lato-Black.21c4d25c.woff",
     "static/media/Lato-Black.ttf": "/kanban-mintbean-hackathon/static/media/Lato-Black.77d35374.ttf",
     "static/media/Lato-Black.woff2": "/kanban-mintbean-hackathon/static/media/Lato-Black.9ab28490.woff2",
@@ -68,8 +68,8 @@
   "entrypoints": [
     "static/js/runtime-main.ab7e996a.js",
     "static/css/2.b1b91439.chunk.css",
-    "static/js/2.48c77132.chunk.js",
+    "static/js/2.da3dfa1f.chunk.js",
     "static/css/main.e6c532cf.chunk.css",
-    "static/js/main.b80005af.chunk.js"
+    "static/js/main.ce648475.chunk.js"
   ]
 }
