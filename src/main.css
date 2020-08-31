@@ -1,3 +1,4 @@
+html,
 body {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu",
@@ -5,6 +6,8 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   font-family: "Open Sans", sans-serif;
+  height: 100%;
+  overflow-x: hidden;
 }
 
 code {
@@ -12,8 +15,21 @@ code {
 }
 
 main {
-  height: calc(100vh - 128px);
+  min-height: calc(100vh - 132px);
+  width: 100%;
   background: #ff7f50;
+  margin-bottom: 0px;
+  overflow-x: auto !important;
+  white-space: nowrap;
+}
+
+#board-container {
+  min-height: calc(100vh - 132px);
+  width: 100%;
+  height: 100%;
+  overflow-x: auto !important;
+  display: flex;
+  flex-direction: row;
 }
 
 /* ========================= NAV ========================= */
@@ -23,66 +39,7 @@ main {
   margin-right: 5%;
 }
 
-#header {
-  height: 64px;
-}
-
-#footer {
-  height: 64px;
-  color: white;
-}
-
-#toolbar {
-  height: 48px;
-  color: white;
-  background: grey;
-}
-
 /* ======================= BOARD AND CARD ========================= */
-
-#board-container {
-  display: flex;
-  justify-content: space-between;
-
-  overflow-x: auto;
-  overflow-y: auto;
-
-  height: calc(100vh - 190px);
-  width: 100%;
-
-  margin: 0px 0px;
-  padding: 16px 16px;
-}
-
-.board {
-  display: flex;
-  flex-direction: column;
-
-  max-width: 400px;
-  min-width: 400px;
-
-  background-color: #10aeb2;
-
-  padding: 16px;
-
-  box-shadow: 2px 2px 4px;
-}
-
-.board-dropdown {
-  display: inline-block;
-}
-
-.board-top {
-  display: flex;
-  margin-bottom: 16px;
-}
-
-.board-name {
-  margin-top: 4px;
-  display: inline-block;
-  margin-right: auto;
-  vertical-align: middle;
-}
 
 .threedots:after {
   content: "\2807";
@@ -90,41 +47,6 @@ main {
   display: inline-block;
   margin-left: auto;
   margin-right: -8px;
-}
-
-.card-container {
-  justify-content: space-between;
-  height: 100%;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 8px;
-  margin-bottom: 8px;
-  min-height: 64px;
-}
-
-.card {
-  margin-bottom: 8px;
-  padding-left: 8px;
-  padding-right: 8px;
-  padding-top: 8px;
-  padding-bottom: 8px;
-  cursor: pointer;
-  box-shadow: 1px 1px 2px;
-  cursor: grabbing;
-}
-
-.tag-container {
-  display: block;
-}
-
-.tag-container > span {
-  display: inline-block;
-  margin-right: 4px;
-}
-
-.card-pin {
-  display: inline block;
-  margin-left: auto;
   cursor: pointer;
 }
 

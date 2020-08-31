@@ -1,7 +1,65 @@
-import React from "react";
+import React, { Component } from "react";
 import { Button, Dropdown } from "react-bootstrap";
+import Styled from "styled-components";
+import { Draggable, Droppable } from "react-beautiful-dnd";
+import { SweetAlert } from "react-bootstrap-sweetalert";
 
-// A custom dropdown menu for the board.
+import AddCardModal from "./AddCardModal";
+import Card from "./Card";
+import EditBoardModal from "./EditBoardModal";
+
+const Main = Styled.div`
+  display: inline-flex;
+  flex-direction: column;
+  max-width: 400px;
+  min-width: 400px;
+  background-color: #10aeb2;
+  padding: 16px;
+  margin-right: 16px;
+  margin-bottom: 48px;
+  margin-left: 16px;
+  margin-top: 48px;
+  box-shadow: 2px 2px 4px;
+`;
+
+const TopSection = Styled.div`
+  display: flex;
+  margin-bottom: 16px;
+`;
+
+const Title = Styled.h4`
+  margin-top: 4px;
+  display: inline-block;
+  margin-right: auto;
+  vertical-align: middle;
+`;
+
+const DropdownList = Styled.div`
+  display: inline-block;
+`;
+
+const CardContainer = Styled.div`
+  justify-content: space-between;
+  height: 100%;
+  padding-left: 8px;
+  padding-right: 8px;
+  padding-top: 8px;
+  margin-bottom: 8px;
+  min-height: 64px;
+  transition: background-color 0.4s ease;
+  background-color: ${(props) => (props.isDraggingOver ? "#ecf284" : "#17deee")};
+`;
+
+const BottomSection = Styled.div`
+  display: block;
+`;
+
+const AddButton = Styled.div`
+  background-color: "#043334";
+  color: white;
+`;
+
+// A custom dropdown menu for the board (three vertical dots).
 // Needs to be customized, otherwise dropdown menu is a button by default and
 // includes a downward arrow icon which looks strange.
 const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
@@ -9,7 +67,7 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
     href=""
     ref={ref}
     onClick={(e) => {
-      e.preDefault();
+      e.preventDefault();
       onClick(e);
     }}
   >
@@ -18,68 +76,116 @@ const CustomToggle = React.forwardRef(({ children, onClick }, ref) => (
   </div>
 ));
 
-function Board(props) {
-  const [isOver, setIsOver] = React.useState(false);
+class CardList extends Component {
+  shouldComponentUpdate(nextProps) {
+    // Only update when cards has changed.
+    return !(nextProps.cards === this.props.cards);
+  }
 
-  const drop = (e) => {
-    e.preventDefault();
-    const card_id = e.dataTransfer.getData("card_id");
-    const card = document.getElementById(card_id);
+  render() {
+    return this.props.cards.map((card, index) => (
+      <Card
+        key={card.id}
+        card={card}
+        index={index}
+        handleUpdateCard={this.props.handleUpdateCard}
+        handleDeleteCard={this.props.handleDeleteCard}
+        handleUpdatePins={this.props.handleUpdatePins}
+        boardId={this.props.boardId}
+      />
+    ));
+  }
+}
 
-    // Hide the card after dragging (appear invisible illusion of dragging)
-    card.style.display = "block";
+class Board extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      editBoardModalShow: false,
+      addCardModalShow: false,
+      showDeletePopup: false,
+      showClearPopup: false,
+    };
+  }
 
-    // Add the card to the end of the board.
-    e.target.appendChild(card);
-    setIsOver(false);
+  handleEditBoard = () => {
+    this.setState({ editBoardModalShow: true });
   };
 
-  const dragOver = (e) => {
-    setIsOver(true);
-    e.preventDefault();
-    e.stopPropagation();
+  onShowDeletePopup = (event) => {
+    this.props.handleDeleteBoard(this.props.board.id);
+    // TODO - HANDLE DELETE BOARD IN POPUP
+    this.setState({ showDeletePopup: true });
   };
 
-  //const dragEnter = () => {
-  //  setIsOver(true);
-  //};
-
-  const dragExit = () => {
-    setIsOver(false);
+  onShowClearPopup = (event) => {
+    this.props.handleClearBoard(this.props.board.id);
+    // TODO - HANDLE CLEAR IN POPUP
+    this.setState({ showClearPopup: true });
   };
 
-  return (
-    <div id={props.id} className="board rounded">
-      <div className="board-top">
-        <div className="h4 board-name text-light">Board Name</div>
-        <div className="board-dropdown">
-          <Dropdown alignRight="true">
-            <Dropdown.Toggle as={CustomToggle}></Dropdown.Toggle>
-            <Dropdown.Menu size="sm" title="">
-              <Dropdown.Header>Options</Dropdown.Header>
-              <Dropdown.Item>Edit Board</Dropdown.Item>
-              {/* This can perhaps be a solution in case we cannot get boards to be draggable */}
-              <Dropdown.Item>Move Board -></Dropdown.Item>
-              <Dropdown.Divider></Dropdown.Divider>
-              <Dropdown.Item>Clear Board</Dropdown.Item>
-              <Dropdown.Item>Delete Board</Dropdown.Item>
-            </Dropdown.Menu>
-          </Dropdown>
-        </div>
-      </div>
-      <div
-        className="card-container rounded"
-        style={{ backgroundColor: isOver ? "#ecf284" : "#17deee" }}
-        onDrop={drop}
-        onDragOver={dragOver}
-        //onDragEnter={dragEnter}
-        onDragLeave={dragExit}
-      >
-        {props.children}
-      </div>
-      <Button variant="outline-light">+ Add Card</Button>
-    </div>
-  );
+  render() {
+    return (
+      <Draggable draggableId={this.props.board.id} index={this.props.index}>
+        {(provided) => (
+          <Main {...provided.draggableProps} ref={provided.innerRef} className="rounded">
+            <TopSection {...provided.dragHandleProps}>
+              <Title className="h4 text-light">{this.props.board.name}</Title>
+              <DropdownList>
+                <Dropdown alignRight={true}>
+                  <Dropdown.Toggle as={CustomToggle}></Dropdown.Toggle>
+                  <Dropdown.Menu size="sm" title="">
+                    <Dropdown.Header>Options</Dropdown.Header>
+                    <Dropdown.Item onClick={this.handleEditBoard}>Edit Board</Dropdown.Item>
+                    <Dropdown.Divider></Dropdown.Divider>
+                    <Dropdown.Item onClick={this.onShowClearPopup}>Clear Board</Dropdown.Item>
+                    <Dropdown.Item onClick={this.onShowDeletePopup}>Delete Board</Dropdown.Item>
+                  </Dropdown.Menu>
+                </Dropdown>
+              </DropdownList>
+            </TopSection>
+            <Droppable droppableId={this.props.board.id} type="card">
+              {(provided, snapshot) => (
+                <CardContainer
+                  className="rounded"
+                  ref={provided.innerRef}
+                  {...provided.droppableProps}
+                  isDraggingOver={snapshot.isDraggingOver}
+                >
+                  <CardList
+                    cards={this.props.cards}
+                    handleUpdateCard={this.props.handleUpdateCard}
+                    handleDeleteCard={this.props.handleDeleteCard}
+                    handleUpdatePins={this.props.handleUpdatePins}
+                    boardId={this.props.board.id}
+                  ></CardList>
+                  {provided.placeholder}
+                </CardContainer>
+              )}
+            </Droppable>
+            <BottomSection>
+              <AddButton>
+                <Button onClick={() => this.setState({ addCardModalShow: true })}>+</Button>
+              </AddButton>
+            </BottomSection>
+            <EditBoardModal
+              show={this.state.editBoardModalShow}
+              boardId={this.props.board.id}
+              boardName={this.props.board.name}
+              handleEditBoard={this.props.handleEditBoard}
+              onHide={() => this.setState({ editBoardModalShow: false })}
+            />
+            <AddCardModal
+              show={this.state.addCardModalShow}
+              boardId={this.props.board.id}
+              handleAddCard={this.props.handleAddCard}
+              onHide={() => this.setState({ addCardModalShow: false })}
+            />
+          </Main>
+        )}
+      </Draggable>
+    );
+  }
 }
 
 export default Board;

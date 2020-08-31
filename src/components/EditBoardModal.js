@@ -1,8 +1,7 @@
 import React from "react";
 import { Modal, Button, InputGroup, FormControl } from "react-bootstrap";
-import { v4 as uuidv4 } from "uuid";
 
-class AddBoardModal extends React.Component {
+class EditBoardModal extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -14,30 +13,25 @@ class AddBoardModal extends React.Component {
     this.setState({ boardName: e.target.value });
   };
 
-  handleCreate = (e) => {
-    // Create a new board and add
-    console.log("Creating New Board...");
-    const newBoard = {
-      id: uuidv4(),
-      name: this.state.boardName,
-      cards: [],
-    };
-    this.props.handleAddBoard(newBoard);
+  handleEdit = (e) => {
+    // Edit board name of existing board
+    console.log("Edit Board Name...");
+    this.props.handleEditBoard(this.state.boardName, this.props.boardId);
     this.props.onHide();
   };
 
   render() {
-    const { handleAddBoard, ...rest } = this.props;
+    const { handleEditBoard, boardName, boardId, ...rest } = this.props;
     return (
       <Modal {...rest} size="lg" aria-labelledby="contained-modal-title-vcenter" centered>
         <Modal.Header closeButton>
-          <Modal.Title id="contained-modal-title-vcenter">Add New Board</Modal.Title>
+          <Modal.Title id="contained-modal-title-vcenter">Change Board Name</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="h5">Board Name</div>
+          <h5>Board Name</h5>
           <InputGroup className="mb-3">
             <FormControl
-              placeholder=""
+              placeholder={this.props.boardName}
               aria-label="BoardName"
               aria-describedby="basic-addon1"
               onChange={this.handleChange}
@@ -46,8 +40,8 @@ class AddBoardModal extends React.Component {
           </InputGroup>
         </Modal.Body>
         <Modal.Footer>
-          <Button variant="success" onClick={this.handleCreate}>
-            Create
+          <Button variant="success" onClick={this.handleEdit}>
+            Edit
           </Button>
         </Modal.Footer>
       </Modal>
@@ -55,4 +49,4 @@ class AddBoardModal extends React.Component {
   }
 }
 
-export default AddBoardModal;
+export default EditBoardModal;
