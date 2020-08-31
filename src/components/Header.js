@@ -100,12 +100,13 @@ class Header extends Component {
           onHide={() => this.setState({ showAddBoardModal: false })}
         />
         <Modal
-          aria-labelledby="contained-modal-title-vcenter"
-          centered
+          aria-labelledby="xxx"
           show={this.state.showImportFileModal}
+          onHide={() => this.setState({ showImportFileModal: false })}
+          centered
         >
           <Modal.Header closeButton>
-            <Modal.Title id="contained-modal-title-vcenter">Import File</Modal.Title>
+            <Modal.Title id="xxx">Import File</Modal.Title>
           </Modal.Header>
           <Modal.Body>
             <FileSelector
