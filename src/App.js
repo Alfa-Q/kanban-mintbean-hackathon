@@ -357,7 +357,6 @@ class App extends React.Component {
           <div
             id="board-container"
             style={{
-              background: "black",
               overflowX: "auto !important",
               paddingLeft: "32px",
             }}
