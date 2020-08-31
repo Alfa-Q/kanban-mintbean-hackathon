@@ -7,6 +7,7 @@ body {
   -moz-osx-font-smoothing: grayscale;
   font-family: "Open Sans", sans-serif;
   height: 100%;
+  overflow-x: hidden;
 }
 
 code {
@@ -14,11 +15,21 @@ code {
 }
 
 main {
-  min-height: 100vh;
-  padding: 16px 16px;
+  min-height: calc(100vh - 188px);
+  width: 100%;
   background: #ff7f50;
   margin-bottom: 0px;
-  overflow-y: auto !important;
+  overflow-x: auto !important;
+  white-space: nowrap;
+}
+
+#board-container {
+  min-height: calc(100vh - 188px);
+  width: 100%;
+  height: 100%;
+  overflow-x: auto !important;
+  display: flex;
+  flex-direction: row;
 }
 
 /* ========================= NAV ========================= */
@@ -36,6 +47,7 @@ main {
   display: inline-block;
   margin-left: auto;
   margin-right: -8px;
+  cursor: pointer;
 }
 
 .unselectable {

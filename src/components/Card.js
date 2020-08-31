@@ -3,6 +3,8 @@ import Styled from "styled-components";
 import { Badge } from "react-bootstrap";
 import { Draggable } from "react-beautiful-dnd";
 
+import ViewCardModal from "./ViewCardModal";
+
 const Main = Styled.div`
   margin-bottom: 8px;
   padding-left: 8px;
@@ -15,6 +17,9 @@ const Main = Styled.div`
 
 const TopSection = Styled.div`
   display: block;
+  word-wrap: break-word;
+  white-space: nowrap;
+  white-space: initial;
 `;
 
 const BottomSection = Styled.div`
@@ -43,6 +48,23 @@ const DueDate = Styled.div`
 `;
 
 class Card extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      viewCardModal: false,
+    };
+  }
+
+  handleDoubleClick = () => {
+    console.log("Showing Card Modal");
+    this.setState({ viewCardModal: true });
+  };
+
+  handleCloseModal = () => {
+    console.log("Hiding the Modal");
+    this.setState({ viewCardModal: false });
+  };
+
   render() {
     return (
       <Draggable
@@ -56,12 +78,13 @@ class Card extends Component {
             {...provided.dragHandleProps}
             ref={provided.innerRef}
             isDragging={snapshot.isDragging}
+            onDoubleClick={this.handleDoubleClick}
           >
             <TopSection>
               <TagContainer>
                 {this.props.card.tags.map((tag) => (
                   <Badge key={tag.id} style={{ backgroundColor: tag.color }}>
-                    {tag.id}
+                    {tag.name}
                   </Badge>
                 ))}
               </TagContainer>
@@ -69,10 +92,11 @@ class Card extends Component {
             </TopSection>
             <BottomSection>
               <DueDate>
-                <span role="img" aria-label="due">
+                <span role="img" aria-label="due" data-placement="top" title="Tooltip on top">
                   🕒
                 </span>{" "}
-                {new Date(this.props.date).toDateString()}
+                {new Date(this.props.card.due).toLocaleDateString()} |{" "}
+                {new Date(this.props.card.due).toLocaleTimeString()}
               </DueDate>
               <CardPin>
                 {this.props.card.pinned ? (
@@ -82,6 +106,14 @@ class Card extends Component {
                 )}
               </CardPin>
             </BottomSection>
+            <ViewCardModal
+              show={this.state.viewCardModal}
+              onHide={this.handleCloseModal}
+              handleUpdateCard={this.props.handleUpdateCard}
+              handleDeleteCard={this.props.handleDeleteCard}
+              boardId={this.props.boardId}
+              card={this.props.card}
+            ></ViewCardModal>
           </Main>
         )}
       </Draggable>

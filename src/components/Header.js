@@ -1,12 +1,35 @@
 import React, { Component } from "react";
-import { Navbar, Button } from "react-bootstrap";
+import { Navbar, Button, DropdownButton, Dropdown } from "react-bootstrap";
+import SweetAlert from "react-bootstrap-sweetalert";
 import Styled from "styled-components";
+import AddBoardModal from "./AddBoardModal";
 
 const Wrapper = Styled.div`
   background-image: linear-gradient(315deg, #045de9 0%, #09c6f9 74%);
 `;
 
+const ButtonContainer = Styled.div`
+  margin-left: auto;
+`;
+
 class Header extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      showResetPopup: false,
+      showAddBoardModal: false,
+    };
+  }
+
+  onShowAddBoardModal = (event) => {
+    this.setState({ showAddBoardModal: true });
+    console.log(this.props);
+  };
+
+  onShowResetPopup = (event) => {
+    this.setState({ showResetPopup: true });
+  };
+
   render() {
     return (
       <Wrapper>
@@ -15,11 +38,71 @@ class Header extends Component {
             <img src="/kanban-logo.png" alt="Logo" width="30" height="30" className="brandIcon" />
             Mintbean Kanban
           </Navbar.Brand>
-          <Button className="ml-auto" variant="outline-light">
-            Settings
-          </Button>
+          <ButtonContainer>
+            <Button
+              className="ml-2"
+              variant="outline-light"
+              onClick={() => this.setState({ showAddBoardModal: true })}
+            >
+              + Add Board
+            </Button>
+            <DropdownButton
+              alignRight
+              className="ml-2 d-inline"
+              variant="outline-light"
+              title="Options"
+            >
+              <Dropdown.Item href="#/action-2">Import File</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">Export File</Dropdown.Item>
+              <Dropdown.Item href="#/action-2">Settings</Dropdown.Item>
+              <Dropdown.Divider />
+              <Dropdown.Item onClick={this.onShowResetPopup}>Reset Kanban</Dropdown.Item>
+            </DropdownButton>
+          </ButtonContainer>
         </Navbar>
+        <AddBoardModal
+          show={this.state.showAddBoardModal}
+          handleAddBoard={this.props.handleAddBoard}
+          onHide={() => this.setState({ showAddBoardModal: false })}
+        />
+        <AlertResetKanban
+          show={this.state.showResetPopup}
+          hide={() => this.setState({ showResetPopup: false })}
+          handleResetKanban={this.props.handleResetKanban}
+        ></AlertResetKanban>
       </Wrapper>
+    );
+  }
+}
+
+class AlertResetKanban extends Component {
+  onConfirm = () => {
+    console.log("Confirm");
+    this.props.handleResetKanban();
+    this.props.hide();
+  };
+
+  onCancel = () => {
+    console.log("Cancel");
+    this.setState({ show: false });
+    this.props.hide();
+  };
+
+  render() {
+    const { show } = this.props;
+    return (
+      <SweetAlert
+        danger
+        showCancel
+        confirmBtnBsStyle="danger"
+        confirmBtnText="Reset Kanban"
+        title="Are You Sure You Want to Reset The Kanban?"
+        onConfirm={this.onConfirm}
+        onCancel={this.onCancel}
+        show={show}
+      >
+        This will permanently remove all of your boards and cards!
+      </SweetAlert>
     );
   }
 }
