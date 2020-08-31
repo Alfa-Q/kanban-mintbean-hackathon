@@ -14,7 +14,7 @@
 importScripts("https://storage.googleapis.com/workbox-cdn/releases/4.3.1/workbox-sw.js");
 
 importScripts(
-  "/kanban-mintbean-hackathon/precache-manifest.bbc888900617d0530fc72df97349b718.js"
+  "/kanban-mintbean-hackathon/precache-manifest.e311d7bdd33704e28f75f4fd78954f36.js"
 );
 
 self.addEventListener('message', (event) => {

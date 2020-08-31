@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "fdd7cbf0a06f35e24faef0bea1431573",
+    "revision": "d7064118610aaa50b5381dc81bd25e76",
     "url": "/kanban-mintbean-hackathon/index.html"
   },
   {
@@ -8,7 +8,7 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/kanban-mintbean-hackathon/static/css/2.b1b91439.chunk.css"
   },
   {
-    "revision": "5e32b942b318a7744246",
+    "revision": "93d4db28f6e1ae575908",
     "url": "/kanban-mintbean-hackathon/static/css/main.e6c532cf.chunk.css"
   },
   {
@@ -20,8 +20,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/kanban-mintbean-hackathon/static/js/2.da3dfa1f.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "5e32b942b318a7744246",
-    "url": "/kanban-mintbean-hackathon/static/js/main.ce648475.chunk.js"
+    "revision": "93d4db28f6e1ae575908",
+    "url": "/kanban-mintbean-hackathon/static/js/main.3dd79d0b.chunk.js"
   },
   {
     "revision": "df2c77425883ceaaa727",
