@@ -1,12 +1,10 @@
 import React from "react";
 import { DragDropContext, Droppable } from "react-beautiful-dnd";
-import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import Board from "./components/Board";
 import ModalContainer from "./components/ModalContainer";
-import Home from "./components/Home";
 
 // TEMPORARY
 import defaultState from "./default-state";
@@ -33,7 +31,9 @@ class App extends React.Component {
     this.handleDeleteBoard.bind(this);
   }
 
-  handleUpdatePins = (cardId, boardId, isPinned) => {};
+  handleUpdatePins = (card, boardId) => {
+    //this.handleAddCard(card, boardId);
+  };
 
   handleImportFile = (fileData) => {
     try {
@@ -344,73 +344,64 @@ class App extends React.Component {
 
   render() {
     return (
-      <Router>
-        <Switch>
-          <Route path="/app">
-            <div>
-              {/* These two components stickied to top */}
-              <Header
-                handleAddBoard={this.handleAddBoard}
-                handleResetKanban={this.handleResetKanban}
-                handleImportFile={this.handleImportFile}
-                handleExportFile={this.handleExportFile}
-              ></Header>
-              {/* The rest is unstickied */}
-              <main>
-                <div
-                  id="board-container"
-                  style={{
-                    background: "black",
-                    overflowX: "auto !important",
-                    paddingLeft: "32px",
-                  }}
-                >
-                  <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
-                    <Droppable droppableId="board-container" type="board" direction="horizontal">
-                      {(provided) => (
-                        <div {...provided.droppableProps} ref={provided.innerRef}>
-                          {
-                            //  Generate all of the boards
-                            this.state.boardOrder.map((boardId, index) => {
-                              const board = this.state.boards[boardId];
-                              const cards = board.cards.map((cardId) => {
-                                const card = this.state.cards[cardId];
-                                const tags = card.tags.map((tagId) => this.state.tags[tagId]);
-                                return { ...card, tags: tags };
-                              });
-                              return (
-                                <Board
-                                  key={board.id}
-                                  board={board}
-                                  cards={cards}
-                                  handleAddCard={this.handleAddCard}
-                                  handleEditBoard={this.handleEditBoard}
-                                  handleClearBoard={this.handleClearBoard}
-                                  handleDeleteBoard={this.handleDeleteBoard}
-                                  handleUpdateCard={this.handleUpdateCard}
-                                  handleDeleteCard={this.handleDeleteCard}
-                                  handleUpdatePins={this.handleUpdatePins}
-                                  index={index}
-                                />
-                              );
-                            })
-                          }
-                          {provided.placeholder}
-                        </div>
-                      )}
-                    </Droppable>
-                  </DragDropContext>
-                </div>
-              </main>
-              <ModalContainer handleClearBoard={this.handleClearBoard}></ModalContainer>
-              <Footer></Footer>
-            </div>
-          </Route>
-          <Route path="/">
-            <Home />
-          </Route>
-        </Switch>
-      </Router>
+      <div>
+        {/* These two components stickied to top */}
+        <Header
+          handleAddBoard={this.handleAddBoard}
+          handleResetKanban={this.handleResetKanban}
+          handleImportFile={this.handleImportFile}
+          handleExportFile={this.handleExportFile}
+        ></Header>
+        {/* The rest is unstickied */}
+        <main>
+          <div
+            id="board-container"
+            style={{
+              background: "black",
+              overflowX: "auto !important",
+              paddingLeft: "32px",
+            }}
+          >
+            <DragDropContext onDragStart={this.onDragStart} onDragEnd={this.onDragEnd}>
+              <Droppable droppableId="board-container" type="board" direction="horizontal">
+                {(provided) => (
+                  <div {...provided.droppableProps} ref={provided.innerRef}>
+                    {
+                      //  Generate all of the boards
+                      this.state.boardOrder.map((boardId, index) => {
+                        const board = this.state.boards[boardId];
+                        const cards = board.cards.map((cardId) => {
+                          const card = this.state.cards[cardId];
+                          const tags = card.tags.map((tagId) => this.state.tags[tagId]);
+                          return { ...card, tags: tags };
+                        });
+                        return (
+                          <Board
+                            key={board.id}
+                            board={board}
+                            cards={cards}
+                            handleAddCard={this.handleAddCard}
+                            handleEditBoard={this.handleEditBoard}
+                            handleClearBoard={this.handleClearBoard}
+                            handleDeleteBoard={this.handleDeleteBoard}
+                            handleUpdateCard={this.handleUpdateCard}
+                            handleDeleteCard={this.handleDeleteCard}
+                            handleUpdatePins={this.handleUpdatePins}
+                            index={index}
+                          />
+                        );
+                      })
+                    }
+                    {provided.placeholder}
+                  </div>
+                )}
+              </Droppable>
+            </DragDropContext>
+          </div>
+        </main>
+        <ModalContainer handleClearBoard={this.handleClearBoard}></ModalContainer>
+        <Footer></Footer>
+      </div>
     );
   }
 }

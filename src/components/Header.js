@@ -61,7 +61,13 @@ class Header extends Component {
       <Wrapper>
         <Navbar bg="primary" variant="dark" color="light">
           <Navbar.Brand className="unselectable">
-            <img src="/kanban-logo.png" alt="Logo" width="30" height="30" className="brandIcon" />
+            <img
+              src={process.env.PUBLIC_URL + "/kanban-logo.png"}
+              alt="Logo"
+              width="30"
+              height="30"
+              className="brandIcon"
+            />
             Mintbean Kanban
           </Navbar.Brand>
           <ButtonContainer>

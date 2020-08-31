@@ -67,7 +67,7 @@ class Card extends Component {
 
   handlePinClicked = () => {
     this.props.card.pinned = !this.props.card.pinned;
-    this.props.handleUpdatePins(this.props.boardId, this.props.card.id, this.props.card.pinned);
+    this.props.handleUpdatePins(this.props.boardId, this.props.card.id);
   };
 
   render() {
@@ -103,17 +103,7 @@ class Card extends Component {
                 {new Date(this.props.card.due).toLocaleDateString()} |{" "}
                 {new Date(this.props.card.due).toLocaleTimeString()}
               </DueDate>
-              <CardPin>
-                {this.props.card.pinned ? (
-                  <img src="/icons8-pin-24.png" alt="pin" onClick={() => this.handlePinClicked} />
-                ) : (
-                  <img
-                    src="/icons8-pin-outline-24.png"
-                    alt="unpinned"
-                    onClick={this.handlePinClicked}
-                  />
-                )}
-              </CardPin>
+              <CardPin></CardPin>
             </BottomSection>
             <ViewCardModal
               show={this.state.viewCardModal}

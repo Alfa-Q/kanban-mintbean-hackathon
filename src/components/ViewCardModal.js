@@ -133,7 +133,7 @@ class ViewCardModal extends Component {
                   </InputGroup.Prepend>
                   <Form.Control
                     type="text"
-                    placeholder="Enter a Primary Tag"
+                    placeholder="Enter a Tag Name"
                     onChange={this.handleChangeTagName}
                     maxLength={50}
                   />
