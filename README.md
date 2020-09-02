@@ -27,8 +27,8 @@ Information about the challenge can be viewed here on the official page: https:/
 Name            | Github
 --------------- | --------------------------
 Josh Matsushima | https://github.com/Alfa-Q
-Ryan Mileris    | https://github.com/BioTerran
-Scott Krysten   | https://github.com/TheBananasToTheWallHost
+Ryan Mileris    | https://github.com/TheBananasToTheWallHost
+Scott Krysten   | https://github.com/BioTerran
 
 This project was developed in VS Code using Microsoft's [live share add-on](https://marketplace.visualstudio.com/items?itemName=MS-vsliveshare.vsliveshare) (which is why all commits were only made by one person).  It was very helpful as a sort of pair programming / side-by-side programming tool, as most of us in the group have never used React.js before!
 
