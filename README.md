@@ -1,5 +1,5 @@
 # kanban-mintbean-hackathon
-Kanban project for the Mintbean JS Bootcamp Olympics 2020 Hackathon from 08/29/2020 - 08/30/2020
+Kanban project for the Mintbean JS Bootcamp Olympics 2020 Hackathon from 08/29/2020 - 08/31/2020
 
 🎖️ Awarded an Honorable Mention!
 
